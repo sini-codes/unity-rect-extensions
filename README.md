@@ -3,7 +3,7 @@ Fluent API for Unity Rect layouting for building maintainable editor UI.
 
 # Installation
 
-### Using Koinonia
+### Using [Koinonia](https://github.com/nitreo/Koinonia)
 
 `install nitreo/unity-rect-extensions`
 
