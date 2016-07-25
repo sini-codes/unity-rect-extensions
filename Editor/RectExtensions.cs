@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Sini.Unity
 {
     public static class RectExtensions
