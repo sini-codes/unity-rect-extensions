@@ -7,6 +7,11 @@ Fluent API for Unity Rect layouting for building maintainable editor UI.
 
 `install nitreo/unity-rect-extensions`
 
+### Git Package
+
+Add `https://github.com/nitreo/unity-rect-extensions.git` to your package manager.
+
+
 ### Manual
 
 Download Zip or Clone repo inside Assets folder.
