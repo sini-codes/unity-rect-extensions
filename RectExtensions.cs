@@ -1,208 +1,214 @@
+﻿using System.Runtime.CompilerServices;
 using UnityEngine;
-using System.Linq;
 
 namespace Sini.Unity
 {
     public static class RectExtensions
     {
-        public static Rect Below(this Rect source, Rect belowSource)
+        /// <summary>
+        /// Determines whether the rectangle has zero size.
+        /// </summary>
+        /// <param name="rect">The rectangle to check.</param>
+        /// <returns>True if the rectangle has zero size, false otherwise.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static bool IsEmpty(in this Rect rect)
         {
-            return new Rect(source.x, belowSource.y + belowSource.height, source.width, source.height);
+            return rect.width == 0 && rect.height == 0;
         }
 
-        public static Rect RightOf(this Rect source, Rect target)
+        /// <summary>
+        /// Scales the size of the rectangle by the given scale factors.
+        /// </summary>
+        /// <param name="rect">The rectangle to be scaled.</param>
+        /// <param name="scale">The scale factors to use for scaling the rectangle.</param>
+        /// <returns>A new rectangle with the same position as the original, but with scaled size.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect ScaleBy(in this Rect rect, float scale)
         {
-            return new Rect(target.x + target.width, source.y, source.width, source.height);
+            return new Rect(rect.x, rect.y, rect.width * scale, rect.height * scale);
         }
 
-        public static Rect WithSize(this Rect source, float width, float height)
+        /// <summary>
+        /// Scales the size of the rectangle by the given scale factors.
+        /// </summary>
+        /// <param name="rect">The rectangle to be scaled.</param>
+        /// <param name="scale">The scale factors to use for scaling the rectangle.</param>
+        /// <returns>A new rectangle with the same position as the original, but with scaled size.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect ScaleBy(in this Rect rect, in Vector2 scale)
+        {
+            return new Rect(rect.x, rect.y, rect.width * scale.x, rect.height * scale.y);
+        }
+
+        /// <summary>
+        /// Offsets the position of the rectangle by the given offset.
+        /// </summary>
+        /// <param name="rect">The rectangle to be offset.</param>
+        /// <param name="offset">The offset to apply to the rectangle.</param>
+        /// <returns>A new rectangle with the same size as the original, but with an offset position.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect OffsetBy(in this Rect rect, in Vector2 offset)
+        {
+            return new Rect(rect.x + offset.x, rect.y + offset.y, rect.width, rect.height);
+        }
+        
+        /// <summary>
+        /// Places the specified rect above the rect on which the method is called, with the option to add additional distance.
+        /// </summary>
+        /// <param name="rect">The rect on which the method is called.</param>
+        /// <param name="otherRect">The rect to place above the rect on which the method is called.</param>
+        /// <param name="distance">The additional distance to move the resulting rect.</param>
+        /// <returns>A new rect with the same width and height as the specified rect and positioned above the rect on which the method is called, with the option to add additional distance.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect Above(this in Rect rect, in Rect otherRect, float distance = 0)
+        {
+            return new Rect(rect.x, rect.y - otherRect.height - distance, rect.width, otherRect.height);
+        }
+
+        /// <summary>
+        /// Place a Rect below another Rect with an optional distance.
+        /// </summary>
+        /// <param name="rect">The Rect to move.</param>
+        /// <param name="other">The Rect to use as a reference point.</param>
+        /// <param name="distance">The optional distance to use between the two Rects. Default is 0.</param>
+        /// <returns>A new Rect with the adjusted position.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect Below(in this Rect rect, in Rect other, float distance = 0)
+        {
+            return new Rect(rect.x, other.yMax + distance, other.width, other.height);
+        }
+        
+        /// <summary>
+        /// Returns a new <see cref="Rect"/> that is positioned to the left of the specified other <see cref="Rect"/>,
+        /// with the specified distance between them.
+        /// </summary>
+        /// <param name="rect">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <param name="other">The other <see cref="Rect"/> to position the new <see cref="Rect"/> relative to.</param>
+        /// <param name="distance">The distance between the two <see cref="Rect"/>s. Default is 0.</param>
+        /// <returns>A new <see cref="Rect"/> that is positioned to the left of the other <see cref="Rect"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect LeftOf(in this Rect rect, in Rect other, float distance = 0)
+        {
+            return new Rect(other.x - rect.width - distance, rect.y, rect.width, rect.height);
+        }
+        
+        /// <summary>
+        /// Returns a new <see cref="Rect"/> that is positioned to the right of the specified other <see cref="Rect"/>,
+        /// with the specified distance between them.
+        /// </summary>
+        /// <param name="rect">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <param name="other">The other <see cref="Rect"/> to position the new <see cref="Rect"/> relative to.</param>
+        /// <param name="distance">The distance between the two <see cref="Rect"/>s. Default is 0.</param>
+        /// <returns>A new <see cref="Rect"/> that is positioned to the right of the other <see cref="Rect"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect RightOf(in this Rect rect, in Rect other, float distance = 0)
+        {
+            return new Rect(other.x + other.width + distance, rect.y, rect.width, rect.height);
+        }
+        
+        /// <summary>
+        /// Returns a new <see cref="Rect"/> with the same position as the original <see cref="Rect"/>, but with the specified width and height.
+        /// </summary>
+        /// <param name="source">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <param name="width">The width of the new <see cref="Rect"/>.</param>
+        /// <param name="height">The height of the new <see cref="Rect"/>.</param>
+        /// <returns>A new <see cref="Rect"/> with the same position as the original <see cref="Rect"/>, but with the specified width and height.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithSize(in this Rect source, float width, float height)
         {
             return new Rect(source.x, source.y, width, height);
         }
 
-        public static Rect WithWidth(this Rect source, float width)
+        /// <summary>
+        /// Returns a new <see cref="Rect"/> with the same position and height as the original <see cref="Rect"/>, but with the specified width.
+        /// </summary>
+        /// <param name="source">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <param name="width">The width of the new <see cref="Rect"/>.</param>
+        /// <returns>A new <see cref="Rect"/> with the same position and height as the original <see cref="Rect"/>, but with the specified width.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithWidth(in this Rect source, float width)
         {
             return new Rect(source.x, source.y, width, source.height);
         }
-
-        public static Rect WithHeight(this Rect source, float height)
+        
+        /// <summary>
+        /// Returns a new <see cref="Rect"/> with the same position and width as the original <see cref="Rect"/>, but with the specified height.
+        /// </summary>
+        /// <param name="source">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <param name="height">The height of the new <see cref="Rect"/>.</param>
+        /// <returns>A new <see cref="Rect"/> with the same position and width as the original <see cref="Rect"/>, but with the specified height.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithHeight(in this Rect source, float height)
         {
             return new Rect(source.x, source.y, source.width, height);
         }
-
-        public static Rect Pad(this Rect source, float left, float top, float right, float bottom)
-        {
-            return new Rect(source.x + left, source.y + top, source.width - right, source.height - bottom);
-        }
-
-        public static Rect PadSides(this Rect source, float padding)
-        {
-            return new Rect(source.x + padding, source.y + padding, source.width - padding * 2, source.height - padding * 2);
-        }
-
-        public static Rect AlignTopRight(this Rect source, Rect target)
-        {
-            return new Rect(target.xMax - source.width, target.y, source.width, source.height);
-        }
-
-        public static Rect AlignHorisonallyByCenter(this Rect source, Rect target)
-        {
-            var y = target.y + (target.height - source.height) / 2;
-
-            return new Rect(source.x, y, source.width, source.height);
-        }
-
-        public static Rect AlignVerticallyByCenter(this Rect source, Rect target)
-        {
-            var x = target.x + (target.width - source.width) / 2;
-            return new Rect(x, source.y, source.width, source.height);
-        }
-
-        public static Rect Translate(this Rect source, float x, float y)
-        {
-            return new Rect(source.x + x, source.y + y, source.width, source.height);
-        }
-
-        public static Rect WithOrigin(this Rect source, float x, float y)
+        
+        /// <summary>
+        /// Returns a new <see cref="Rect"/> with the same width and height as the original <see cref="Rect"/>, but with the specified position.
+        /// </summary>
+        /// <param name="source">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <param name="x">The x-coordinate of the new <see cref="Rect"/>.</param>
+        /// <param name="y">The y-coordinate of the new <see cref="Rect"/>.</param>
+        /// <returns>A new <see cref="Rect"/> with the same width and height as the original <see cref="Rect"/>, but with the specified position.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithPosition(in this Rect source, float x, float y)
         {
             return new Rect(x, y, source.width, source.height);
         }
-
-        public static Rect Align(this Rect source, Rect target)
+        
+        /// <summary>
+        /// Returns a new <see cref="Rect"/> that is positioned with the specified amount of margin on the specified sides.
+        /// </summary>
+        /// <param name="source">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <param name="left">The amount of margin to add to the left side of the <see cref="Rect"/>.</param>
+        /// <param name="top">The amount of margin to add to the top side of the <see cref="Rect"/>.</param>
+        /// <param name="right">The amount of margin to add to the right side of the <see cref="Rect"/>.</param>
+        /// <param name="bottom">The amount of margin to add to the bottom side of the <see cref="Rect"/>.</param>
+        /// <returns>A new <see cref="Rect"/> with the specified margin.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithMargin(in this Rect source, float left, float top, float right, float bottom)
         {
-            return new Rect(target.x, target.y, source.width, source.height);
+            return new Rect(source.x + left, source.y + top, source.width - left - right, source.height - top - bottom);
         }
-
-        public static Rect AlignAndScale(this Rect source, Rect target)
+        
+        /// <summary>
+        /// Returns a new <see cref="Rect"/> that is positioned with the specified amount of margin on all sides.
+        /// </summary>
+        /// <param name="source">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <param name="margin">The amount of margin to add to all sides of the <see cref="Rect"/>.</param>
+        /// <returns>A new <see cref="Rect"/> with the specified margin.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithMargin(in this Rect source, float margin)
         {
-            return new Rect(target.x, target.y, target.width, target.height);
+            return source.WithMargin(margin,margin,margin,margin);
         }
-
-        public static Rect AlignHorisontally(this Rect source, Rect target)
+        
+        /// <summary>
+        /// Returns a new <see cref="Rect"/> that is padded with the specified amount of padding on the specified sides.
+        /// </summary>
+        /// <param name="source">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <param name="left">The amount of padding to add to the left side of the <see cref="Rect"/>.</param>
+        /// <param name="top">The amount of padding to add to the top side of the <see cref="Rect"/>.</param>
+        /// <param name="right">The amount of padding to add to the right side of the <see cref="Rect"/>.</param>
+        /// <param name="bottom">The amount of padding to add to the bottom side of the <see cref="Rect"/>.</param>
+        /// <returns>A new <see cref="Rect"/> with the specified padding.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithPadding(in this Rect source, float left, float top, float right, float bottom)
         {
-            return new Rect(source.x, target.y, source.width, source.height);
+            return source.WithMargin(-left, -top, -right, -bottom);
         }
-
-        public static Rect AlignVertically(this Rect source, Rect target)
+        
+        /// <summary>
+        /// Returns a new <see cref="Rect"/> that is padded with the specified amount of padding on all sides.
+        /// </summary>
+        /// <param name="source">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <param name="padding">The amount of padding to add to all sides of the <see cref="Rect"/>.</param>
+        /// <returns>A new <see cref="Rect"/> with the specified padding.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithPadding(in this Rect source, float padding)
         {
-            return new Rect(target.x, source.y, source.width, source.height);
+            return source.WithMargin(-padding, -padding, -padding, -padding);
         }
-
-        public static Rect CenterInsideOf(this Rect source, Rect target)
-        {
-            var y = target.y + (target.height - source.height) / 2;
-            var x = target.x + (target.width - source.width) / 2;
-            return new Rect(x, y, source.width, source.height);
-        }
-
-        public static Rect LeftHalf(this Rect source)
-        {
-            return new Rect(source.x, source.y, source.width / 2, source.height);
-        }
-
-        public static Rect RightHalf(this Rect source)
-        {
-            return new Rect(source.x + source.width / 2, source.y, source.width / 2, source.height);
-        }
-
-        public static Rect TopHalf(this Rect source)
-        {
-            return new Rect(source.x, source.y, source.width, source.height / 2);
-        }
-
-        public static Rect BottomHalf(this Rect source)
-        {
-            return new Rect(source.x, source.y + source.height / 2, source.width, source.height / 2);
-        }
-        public static Rect Clip(this Rect source, Rect target)
-        {
-            var x = source.x;
-            if (source.x < target.x) x = target.x;
-            if (source.x > target.xMax) x = target.xMax;
-
-            var y = source.y;
-            if (source.y < target.y) y = target.y;
-            if (source.y > target.yMax) y = target.yMax;
-
-            var width = source.width;
-            if (x + source.width > target.xMax) width = target.xMax - source.x;
-
-            var height = source.height;
-            if (y + source.height > target.yMax) height = target.yMax - source.y;
-
-            return new Rect(x, y, width, height);
-        }
-
-        public static Rect InnerAlignWithBottomRight(this Rect source, Rect target)
-        {
-            return new Rect(target.xMax - source.width, target.yMax - source.height, source.width, source.height);
-        }
-
-        public static Rect InnerAlignWithCenterRight(this Rect source, Rect target)
-        {
-            return source.InnerAlignWithBottomRight(target).AlignHorisonallyByCenter(target);
-        }
-
-        public static Rect InnerAlignWithCenterLeft(this Rect source, Rect target)
-        {
-            return source.InnerAlignWithBottomLeft(target).AlignHorisonallyByCenter(target);
-        }
-
-        public static Rect InnerAlignWithBottomLeft(this Rect source, Rect target)
-        {
-            return new Rect(target.x, target.yMax - source.height, source.width, source.height);
-        }
-
-        public static Rect InnerAlignWithUpperRight(this Rect source, Rect target)
-        {
-            return new Rect(target.xMax - source.width, target.y, source.width, source.height);
-        }
-
-        public static Rect InnerAlignWithBottomCenter(this Rect source, Rect target)
-        {
-            var rect = source.AlignVerticallyByCenter(target);
-            rect.y = target.yMax - rect.height;
-            return rect;
-        }
-
-        public static Rect LeftOf(this Rect source, Rect target)
-        {
-            return new Rect(target.x - source.width, source.y, source.width, source.height);
-        }
-
-        public static Rect Above(this Rect source, Rect target)
-        {
-            return new Rect(source.x, target.y - source.height, source.width, source.height);
-        }
-
-        public static Rect AboveAll(this Rect source, Rect target, int i)
-        {
-            return new Rect(source.x, target.y - source.height * i, source.width, source.height);
-        }
-
-        public static Rect Cover(this Rect source, params Rect[] targets)
-        {
-            var x = targets.Min(t => t.x);
-            var y = targets.Min(t => t.y);
-            var width = targets.Max(t => t.xMax - x);
-            var height = targets.Max(t => t.yMax - y);
-            return new Rect(x, y, width, height);
-        }
-
-        public static Rect StretchedVerticallyAlong(this Rect source, Rect target)
-        {
-            return new Rect(source.x, source.y, source.width, target.yMax - source.y);
-        }
-
-        public static Rect AddHeight(this Rect source, int height)
-        {
-            return new Rect(source.x, source.y, source.width, source.height + height);
-        }
-        public static Rect AddWidth(this Rect source, int width)
-        {
-            return new Rect(source.x, source.y, source.width + width, source.height);
-        }
-
-
+        
     }
 }
