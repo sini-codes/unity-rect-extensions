@@ -433,4 +433,132 @@ public class Tests
         Assert.That(result, Is.EqualTo(new Rect(15, 30, 10, 10)));
     }
     
+    [Test]
+    public void TopHalf_ReturnsCorrectRect()
+    {
+        // Arrange
+        Rect rect = new Rect(10, 10, 100, 100);
+
+        // Act
+        Rect topHalf = rect.TopHalf();
+
+        // Assert
+        Assert.AreEqual(10, topHalf.x);
+        Assert.AreEqual(10, topHalf.y);
+        Assert.AreEqual(100, topHalf.width);
+        Assert.AreEqual(50, topHalf.height);
+    }
+    
+    [Test]
+    public void TopHalf_EmptyRect_ReturnsEmptyRect()
+    {
+        // Arrange
+        Rect rect = new Rect();
+
+        // Act
+        Rect topHalf = rect.TopHalf();
+
+        // Assert
+        Assert.AreEqual(0, topHalf.x);
+        Assert.AreEqual(0, topHalf.y);
+        Assert.AreEqual(0, topHalf.width);
+        Assert.AreEqual(0, topHalf.height);
+    }
+    
+    [Test]
+    public void BottomHalf_ReturnsCorrectRect()
+    {
+        // Arrange
+        Rect rect = new Rect(10, 10, 100, 100);
+
+        // Act
+        Rect bottomHalf = rect.BottomHalf();
+
+        // Assert
+        Assert.AreEqual(10, bottomHalf.x);
+        Assert.AreEqual(60, bottomHalf.y);
+        Assert.AreEqual(100, bottomHalf.width);
+        Assert.AreEqual(50, bottomHalf.height);
+    }
+    
+    [Test]
+    public void LeftHalf_ReturnsCorrectRect()
+    {
+        // Arrange
+        Rect rect = new Rect(10, 10, 100, 100);
+
+        // Act
+        Rect leftHalf = rect.LeftHalf();
+
+        // Assert
+        Assert.AreEqual(10, leftHalf.x);
+        Assert.AreEqual(10, leftHalf.y);
+        Assert.AreEqual(50, leftHalf.width);
+        Assert.AreEqual(100, leftHalf.height);
+    }
+
+    [Test]
+    public void RightHalf_ReturnsCorrectRect()
+    {
+        // Arrange
+        Rect rect = new Rect(10, 10, 100, 100);
+
+        // Act
+        Rect rightHalf = rect.RightHalf();
+
+        // Assert
+        Assert.AreEqual(60, rightHalf.x);
+        Assert.AreEqual(10, rightHalf.y);
+        Assert.AreEqual(50, rightHalf.width);
+        Assert.AreEqual(100, rightHalf.height);
+    }
+    
+    [Test]
+    public void LeftHalf_EmptyRect_ReturnsEmptyRect()
+    {
+        // Create a new rect with a width of 100 and a height of 50.
+        Rect rect = new Rect(0, 0, 100, 50);
+
+        // Call the LeftHalf method on the rect.
+        Rect leftHalf = rect.LeftHalf();
+
+        // Assert that the left half has the expected values.
+        Assert.AreEqual(0, leftHalf.x);
+        Assert.AreEqual(0, leftHalf.y);
+        Assert.AreEqual(50, leftHalf.width);
+        Assert.AreEqual(50, leftHalf.height);
+    }
+
+    [Test]
+    public void RightHalf_EmptyRect_ReturnsEmptyRect()
+    {
+        // Create a new rect with a width of 100 and a height of 50.
+        Rect rect = new Rect(0, 0, 100, 50);
+
+        // Call the RightHalf method on the rect.
+        Rect rightHalf = rect.RightHalf();
+
+        // Assert that the right half has the expected values.
+        Assert.AreEqual(50, rightHalf.x);
+        Assert.AreEqual(0, rightHalf.y);
+        Assert.AreEqual(50, rightHalf.width);
+        Assert.AreEqual(50, rightHalf.height);
+    }
+
+    [Test]
+    public void BottomHalf_EmptyRect_ReturnsEmptyRect()
+    {
+        // Create a new rect with a width of 100 and a height of 50.
+        Rect rect = new Rect(0, 0, 100, 50);
+
+        // Call the BottomHalf method on the rect.
+        Rect bottomHalf = rect.BottomHalf();
+
+        // Assert that the bottom half has the expected values.
+        Assert.AreEqual(0, bottomHalf.x);
+        Assert.AreEqual(25, bottomHalf.y);
+        Assert.AreEqual(100, bottomHalf.width);
+        Assert.AreEqual(25, bottomHalf.height);
+    }
+    
 }

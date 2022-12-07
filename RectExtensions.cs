@@ -210,5 +210,49 @@ namespace Sini.Unity
             return source.WithMargin(-padding, -padding, -padding, -padding);
         }
         
+        /// <summary>
+        /// Returns the top half of the given <see cref="Rect"/>.
+        /// </summary>
+        /// <param name="rect">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <returns>A new <see cref="Rect"/> with the same position and width as the original <see cref="Rect"/>, but with a height that is half the height of the original <see cref="Rect"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect TopHalf(in this Rect rect)
+        {
+            return new Rect(rect.x, rect.y, rect.width, rect.height / 2);
+        }
+        
+        /// <summary>
+        /// Returns the bottom half of the given <see cref="Rect"/>.
+        /// </summary>
+        /// <param name="rect">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <returns>A new <see cref="Rect"/> with the same width as the original <see cref="Rect"/>, but with a position and height that represent the bottom half of the original <see cref="Rect"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect BottomHalf(in this Rect rect)
+        {
+            return new Rect(rect.x, rect.y + rect.height / 2, rect.width, rect.height / 2);
+        }
+
+        /// <summary>
+        /// Returns the left half of the given <see cref="Rect"/>.
+        /// </summary>
+        /// <param name="rect">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <returns>A new <see cref="Rect"/> with the same height as the original <see cref="Rect"/>, but with a position and width that represent the left half of the original <see cref="Rect"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect LeftHalf(in this Rect rect)
+        {
+            return new Rect(rect.x, rect.y, rect.width / 2, rect.height);
+        }
+
+        /// <summary>
+        /// Returns the right half of the given <see cref="Rect"/>.
+        /// </summary>
+        /// <param name="rect">The original <see cref="Rect"/> to use as a reference.</param>
+        /// <returns>A new <see cref="Rect"/> with the same height as the original <see cref="Rect"/>, but with a position and width that represent the right half of the original <see cref="Rect"/>.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect RightHalf(in this Rect rect)
+        {
+            return new Rect(rect.x + rect.width / 2, rect.y, rect.width / 2, rect.height);
+        }
+        
     }
 }
