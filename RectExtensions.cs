@@ -157,6 +157,18 @@ namespace Sini.Unity
         }
         
         /// <summary>
+        /// Returns a new rectangle with the same size as the original but with its position set to the specified position.
+        /// </summary>
+        /// <param name="rect">The rectangle to modify.</param>
+        /// <param name="position">The new position for the rectangle.</param>
+        /// <returns>A new rectangle with the same size as the original but with its position set to the specified position.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithPosition(this in Rect rect, in Vector2 position)
+        {
+            return new Rect(position.x, position.y, rect.width, rect.height);
+        }
+        
+        /// <summary>
         /// Returns a new <see cref="Rect"/> that is positioned with the specified amount of margin on the specified sides.
         /// </summary>
         /// <param name="source">The original <see cref="Rect"/> to use as a reference.</param>
@@ -253,6 +265,101 @@ namespace Sini.Unity
         {
             return new Rect(rect.x + rect.width / 2, rect.y, rect.width / 2, rect.height);
         }
+        
+        /// <summary>
+        /// Centers the specified rectangle inside the given other rectangle by aligning their centers.
+        /// </summary>
+        /// <param name="rect">The rectangle to center.</param>
+        /// <param name="other">The rectangle to center the first rectangle inside of.</param>
+        /// <returns>A new rectangle with the same size as the original rectangle, but with its position adjusted so that it is centered inside the other rectangle with their centers aligned.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect CenterInside(this in Rect rect, in Rect other)
+        {
+            var center = new Vector2(
+                other.x + other.width / 2 - rect.width / 2,
+                other.y + other.height / 2 - rect.height / 2
+            );
+
+            return rect.WithPosition(center);
+        }
+        
+        /// <summary>
+        /// Returns a new Rect with the same y, width, and height as the first Rect, but with the x value centered inside the second Rect.
+        /// </summary>
+        /// <param name="rect">The first Rect.</param>
+        /// <param name="other">The second Rect to center the first Rect inside.</param>
+        /// <returns>A new Rect with the same y, width, and height as the first Rect, but with the x value centered inside the second Rect.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect CenterXInside(in this Rect rect, in Rect other)
+        {
+            var x = other.x + (other.width - rect.width) / 2;
+            return new Rect(x, rect.y, rect.width, rect.height);
+        }
+        
+        /// <summary>
+        /// Returns a new Rect with the same x, width, and height as the first Rect, but with the y value centered inside the second Rect.
+        /// </summary>
+        /// <param name="rect">The first Rect.</param>
+        /// <param name="other">The second Rect to center the first Rect inside.</param>
+        /// <returns>A new Rect with the same x, width, and height as the first Rect, but with the y value centered inside the second Rect.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect CenterYInside(in this Rect rect, in Rect other)
+        {
+            var y = other.y + (other.height - rect.height) / 2;
+            return new Rect(rect.x, y, rect.width, rect.height);
+        }
+        
+        /// <summary>
+        /// Positions the specified rectangle at the same height as the given other rectangle.
+        /// </summary>
+        /// <param name="rect">The rectangle to position.</param>
+        /// <param name="other">The rectangle to use as a reference point for the height.</param>
+        /// <returns>A new rectangle with the same size as the original rectangle, but with its y position set to the y position of the other rectangle.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithYOf(this in Rect rect, in Rect other)
+        {
+            return rect.WithPosition(new Vector2(rect.x, other.y));
+        }
+        
+        /// <summary>
+        /// Returns a new Rect with the same y, width, and height as the first Rect, but with the x value of the second Rect.
+        /// </summary>
+        /// <param name="rect">The first Rect.</param>
+        /// <param name="other">The second Rect.</param>
+        /// <returns>A new Rect with the x value of the second Rect and the same y, width, and height as the first Rect.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithXOf(in this Rect rect, in Rect other)
+        {
+            return new Rect(other.x, rect.y, rect.width, rect.height);
+        }
+        
+        /// <summary>
+        /// Returns a new Rect with the same x, y, and width as the first Rect, but with the height value of the second Rect.
+        /// </summary>
+        /// <param name="rect">The first Rect.</param>
+        /// <param name="other">The second Rect.</param>
+        /// <returns>A new Rect with the height value of the second Rect and the same x, y, and width as the first Rect.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithHeightOf(in this Rect rect, in Rect other)
+        {
+            return new Rect(rect.x, rect.y, rect.width, other.height);
+        }
+
+        /// <summary>
+        /// Returns a new Rect with the same x, y, and height as the first Rect, but with the width value of the second Rect.
+        /// </summary>
+        /// <param name="rect">The first Rect.</param>
+        /// <param name="other">The second Rect.</param>
+        /// <returns>A new Rect with the width value of the second Rect and the same x, y, and height as the first Rect.</returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect WithWidthOf(in this Rect rect, in Rect other)
+        {
+            return new Rect(rect.x, rect.y, other.width, rect.height);
+        }
+        
+     
+        
+        
         
     }
 }

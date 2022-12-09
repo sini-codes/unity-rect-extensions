@@ -561,4 +561,100 @@ public class Tests
         Assert.AreEqual(25, bottomHalf.height);
     }
     
+    [Test]
+    public void CenterInside_ShouldCenterRectInsideOtherRectWithCentersAligned()
+    {
+        var outer = new Rect(0, 0, 100, 100);
+        var inner = new Rect(0, 0, 10, 10);
+
+        var centered = inner.CenterInside(outer);
+
+        Assert.AreEqual(45, centered.x);
+        Assert.AreEqual(45, centered.y);
+        Assert.AreEqual(10, centered.width);
+        Assert.AreEqual(10, centered.height);
+    }
+
+    [Test]
+    public void WithPosition_ShouldSetPositionOfRect()
+    {
+        var rect = new Rect(0, 0, 100, 100);
+        var position = new Vector2(50, 50);
+
+        var newRect = rect.WithPosition(position);
+
+        Assert.AreEqual(50, newRect.x);
+        Assert.AreEqual(50, newRect.y);
+        Assert.AreEqual(100, newRect.width);
+        Assert.AreEqual(100, newRect.height);
+    }
+    
+    [Test]
+    public void WithYOf_ReturnsExpectedResult()
+    {
+        var rect = new Rect(0, 0, 100, 100);
+        var other = new Rect(0, 50, 100, 100);
+
+        var newRect = rect.WithYOf(other);
+
+        Assert.AreEqual(0, newRect.x);
+        Assert.AreEqual(50, newRect.y);
+        Assert.AreEqual(100, newRect.width);
+        Assert.AreEqual(100, newRect.height);
+    }
+    
+    [Test]
+    public void WithHeightOf_ReturnsExpectedResult()
+    {
+        var rect = new Rect(0, 0, 10, 20);
+        var other = new Rect(0, 0, 5, 10);
+
+        var result = rect.WithHeightOf(other);
+
+        Assert.AreEqual(new Rect(0, 0, 10, 10), result);
+    }
+
+    [Test]
+    public void WithXOf_ReturnsExpectedResult()
+    {
+        var rect = new Rect(0, 0, 10, 20);
+        var other = new Rect(5, 0, 5, 10);
+
+        var result = rect.WithXOf(other);
+
+        Assert.AreEqual(new Rect(5, 0, 10, 20), result);
+    }
+    
+    [Test]
+    public void WithWidthOf_ReturnsExpectedResult()
+    {
+        var rect = new Rect(0, 0, 10, 20);
+        var other = new Rect(0, 0, 5, 10);
+
+        var result = rect.WithWidthOf(other);
+
+        Assert.AreEqual(new Rect(0, 0, 5, 20), result);
+    }
+    
+    [Test]
+    public void CenterYInside_ReturnsExpectedResult()
+    {
+        var rect = new Rect(0, 0, 10, 10);
+        var other = new Rect(0, 0, 20, 20);
+
+        var result = rect.CenterYInside(other);
+
+        Assert.AreEqual(new Rect(0, 5, 10, 10), result);
+    }
+    
+    [Test]
+    public void CenterXInside_ReturnsExpectedResult()
+    {
+        var rect = new Rect(0, 0, 10, 10);
+        var other = new Rect(0, 0, 20, 20);
+
+        var result = rect.CenterXInside(other);
+
+        Assert.AreEqual(new Rect(5, 0, 10, 10), result);
+    }
 }

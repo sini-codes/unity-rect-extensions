@@ -44,32 +44,6 @@ namespace Sini.Unity
             return new Rect(target.x, source.y, source.width, source.height);
         }
 
-        public static Rect CenterInsideOf(Rect source, Rect target)
-        {
-            var y = target.y + (target.height - source.height) / 2;
-            var x = target.x + (target.width - source.width) / 2;
-            return new Rect(x, y, source.width, source.height);
-        }
-
-        public static Rect LeftHalf(Rect source)
-        {
-            return new Rect(source.x, source.y, source.width / 2, source.height);
-        }
-
-        public static Rect RightHalf(Rect source)
-        {
-            return new Rect(source.x + source.width / 2, source.y, source.width / 2, source.height);
-        }
-
-        public static Rect TopHalf(Rect source)
-        {
-            return new Rect(source.x, source.y, source.width, source.height / 2);
-        }
-
-        public static Rect BottomHalf(Rect source)
-        {
-            return new Rect(source.x, source.y + source.height / 2, source.width, source.height / 2);
-        }
         public static Rect Clip(Rect source, Rect target)
         {
             var x = source.x;
@@ -121,17 +95,7 @@ namespace Sini.Unity
             return rect;
         }
 
-        public static Rect LeftOf(Rect source, Rect target)
-        {
-            return new Rect(target.x - source.width, source.y, source.width, source.height);
-        }
-
-        public static Rect Above(Rect source, Rect target)
-        {
-            return new Rect(source.x, target.y - source.height, source.width, source.height);
-        }
-
-        public static Rect AboveAll(Rect source, Rect target, int i)
+        public static Rect AboveAll(Rect source, Rect target, int i )
         {
             return new Rect(source.x, target.y - source.height * i, source.width, source.height);
         }
