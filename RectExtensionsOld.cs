@@ -11,39 +11,6 @@ namespace Sini.Unity
             return new Rect(target.xMax - source.width, target.y, source.width, source.height);
         }
 
-        public static Rect AlignHorisonallyByCenter(Rect source, Rect target)
-        {
-            var y = target.y + (target.height - source.height) / 2;
-
-            return new Rect(source.x, y, source.width, source.height);
-        }
-
-        public static Rect AlignVerticallyByCenter(Rect source, Rect target)
-        {
-            var x = target.x + (target.width - source.width) / 2;
-            return new Rect(x, source.y, source.width, source.height);
-        }
-
-        public static Rect Align(Rect source, Rect target)
-        {
-            return new Rect(target.x, target.y, source.width, source.height);
-        }
-
-        public static Rect AlignAndScale(Rect source, Rect target)
-        {
-            return new Rect(target.x, target.y, target.width, target.height);
-        }
-
-        public static Rect AlignHorisontally(Rect source, Rect target)
-        {
-            return new Rect(source.x, target.y, source.width, source.height);
-        }
-
-        public static Rect AlignVertically(Rect source, Rect target)
-        {
-            return new Rect(target.x, source.y, source.width, source.height);
-        }
-
         public static Rect Clip(Rect source, Rect target)
         {
             var x = source.x;
@@ -68,15 +35,15 @@ namespace Sini.Unity
             return new Rect(target.xMax - source.width, target.yMax - source.height, source.width, source.height);
         }
 
-        public static Rect InnerAlignWithCenterRight(Rect source, Rect target)
-        {
-            return AlignHorisonallyByCenter(InnerAlignWithBottomRight(source, target), target);
-        }
-
-        public static Rect InnerAlignWithCenterLeft(Rect source, Rect target)
-        {
-            return AlignHorisonallyByCenter(InnerAlignWithBottomLeft(source, target), target);
-        }
+        // public static Rect InnerAlignWithCenterRight(Rect source, Rect target)
+        // {
+        //     return AlignHorisonallyByCenter(InnerAlignWithBottomRight(source, target), target);
+        // }
+        //
+        // public static Rect InnerAlignWithCenterLeft(Rect source, Rect target)
+        // {
+        //     return AlignHorisonallyByCenter(InnerAlignWithBottomLeft(source, target), target);
+        // }
 
         public static Rect InnerAlignWithBottomLeft(Rect source, Rect target)
         {
@@ -88,12 +55,12 @@ namespace Sini.Unity
             return new Rect(target.xMax - source.width, target.y, source.width, source.height);
         }
 
-        public static Rect InnerAlignWithBottomCenter(Rect source, Rect target)
-        {
-            var rect = AlignVerticallyByCenter(source, target);
-            rect.y = target.yMax - rect.height;
-            return rect;
-        }
+        // public static Rect InnerAlignWithBottomCenter(Rect source, Rect target)
+        // {
+        //     var rect = AlignVerticallyByCenter(source, target);
+        //     rect.y = target.yMax - rect.height;
+        //     return rect;
+        // }
 
         public static Rect AboveAll(Rect source, Rect target, int i )
         {
