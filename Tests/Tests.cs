@@ -1,3 +1,4 @@
+using System;
 using NUnit.Framework;
 using Sini.Unity;
 using UnityEngine;
@@ -656,5 +657,71 @@ public class Tests
         var result = rect.CenterXInside(other);
 
         Assert.AreEqual(new Rect(5, 0, 10, 10), result);
+    }
+    
+    [Test]
+    public void Cell_ReturnsCorrectRect()
+    {
+        var rect = new Rect(0, 0, 100, 100);
+        var columns = 10;
+        var rows = 10;
+        var x = 4;
+        var y = 4;
+
+        var result = rect.Cell(columns, rows, x, y);
+        // Assert that the result matches the expected values
+        Assert.AreEqual(new Rect(40,40,10,10), result);
+    }
+
+    [Test]
+    public void Cell_WithColumnsLessThanOrEqualToZero()
+    {
+        var rect = new Rect(0, 0, 100, 100);
+        var columns = 0;
+        var rows = 10;
+        var x = 5;
+        var y = 5;
+
+        // Assert that the correct exception is thrown when columns is <= 0
+        Assert.Throws<ArgumentException>(() => rect.Cell(columns, rows, x, y));
+    }
+
+    [Test]
+    public void Cell_WithRowsLessThanOrEqualToZero()
+    {
+        var rect = new Rect(0, 0, 100, 100);
+        var columns = 10;
+        var rows = 0;
+        var x = 5;
+        var y = 5;
+
+        // Assert that the correct exception is thrown when rows is <= 0
+        Assert.Throws<ArgumentException>(() => rect.Cell(columns, rows, x, y));
+    }
+
+    [Test]
+    public void Cell_WithXOutOfRange()
+    {
+        var rect = new Rect(0, 0, 100, 100);
+        var columns = 10;
+        var rows = 10;
+        var x = 11; // x is out of range because it is >= columns
+        var y = 5;
+
+        // Assert that the correct exception is thrown when x is not within the range 0 < x < columns
+        Assert.Throws<ArgumentException>(() => rect.Cell(columns, rows, x, y));
+    }
+
+    [Test]
+    public void Cell_WithYOutOfRange()
+    {
+        var rect = new Rect(0, 0, 100, 100);
+        var columns = 10;
+        var rows = 10;
+        var x = 5;
+        var y = 11; // y is out of range because it is >= rows
+
+        // Assert that the correct exception is thrown when y is not within the range 0 < y < rows
+        Assert.Throws<ArgumentException>(() => rect.Cell(columns, rows, x, y));
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 namespace Sini.Unity
@@ -357,9 +358,59 @@ namespace Sini.Unity
             return new Rect(rect.x, rect.y, other.width, rect.height);
         }
         
-     
-        
+        /// <summary>
+        /// Calculates the Rect that represents a cell in a grid of cells with the given dimensions and coordinates.
+        /// </summary>
+        /// <param name="rect">The overall Rect that represents the grid of cells.</param>
+        /// <param name="columns">The number of cells in the x-direction in the grid.</param>
+        /// <param name="rows">The number of cells in the y-direction in the grid.</param>
+        /// <param name="x">The x-coordinate of the cell in the grid.</param>
+        /// <param name="y">The y-coordinate of the cell in the grid.</param>
+        /// <returns>The Rect that represents the cell at the given (x, y) coordinates.</returns>
+        /// <exception cref="ArgumentException">
+        /// Thrown when <see cref="columns"/> is less than or equal o 0,
+        /// or when <see cref="rows"/> is less then or equal to zero,
+        /// or when <see cref="x"/> is not within the range 0 &lt; <see cref="x"/> &lt; <see cref="columns"/>,
+        /// or when <see cref="y"/> is not within the range 0 &lt; <see cref="y"/> &lt; <see cref="rows"/>.
+        /// </exception>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Rect Cell(in this Rect rect, int columns, int rows, int x, int y)
+        {
+            if (columns <= 0)
+            {
+                throw new ArgumentException($"{nameof(columns)} must be > 0. Received: {columns}");
+            }
+
+            if (rows <= 0)
+            {
+                throw new ArgumentException($"{nameof(rows)} must be > 0. Received: {rows}");
+            }
+
+            if (x >= columns)
+            {
+                throw new ArgumentException($"{nameof(x)} must be 0 < x < {columns} ({nameof(columns)}). Received: {x}");
+            }
+            
+            if (y >= rows)
+            {
+                throw new ArgumentException($"{nameof(y)} must be 0 < y < {rows} ({nameof(rows)}). Received: {x}");
+            }
+            
+            // Calculate the width and height of each cell in the grid
+            float cellWidth = rect.width / columns;
+            float cellHeight = rect.height / rows;
+
+            // Calculate the x and y position of the cell in the grid
+            float xPos = rect.x + (x * cellWidth);
+            float yPos = rect.y + (y * cellHeight);
+
+            // Return the Rect that represents the cell at the given (x, y) coordinates
+            return new Rect(xPos, yPos, cellWidth, cellHeight);
+        }
+
+
         
         
     }
+
 }
