@@ -386,12 +386,12 @@ namespace Sini.Unity
                 throw new ArgumentException($"{nameof(rows)} must be > 0. Received: {rows}");
             }
 
-            if (x >= columns)
+            if (x < 0 || x >= columns)
             {
                 throw new ArgumentException($"{nameof(x)} must be 0 < x < {columns} ({nameof(columns)}). Received: {x}");
             }
             
-            if (y >= rows)
+            if (y < 0 || y >= rows)
             {
                 throw new ArgumentException($"{nameof(y)} must be 0 < y < {rows} ({nameof(rows)}). Received: {x}");
             }
