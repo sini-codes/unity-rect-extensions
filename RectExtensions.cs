@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-namespace Sini.Unity
+namespace Sini.RectExtensions
 {
     public static class RectExtensions
     {
